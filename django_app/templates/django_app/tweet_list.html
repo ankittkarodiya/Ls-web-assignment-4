@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tweets</title>
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFF1DB;
+        }
+        nav{
+            margin: 0;
+            padding: 0 60px;
+            background-color: black;
+            position: relative;
+            top: 0px;
+            /* width: 100vw; */
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 21px;
+        }
+        .linkToHome{
+            color: white;
+            list-style: none;
+            text-decoration: none;
+        }
+        .linkToHome:hover{
+            color: yellow;
+        }
+        .linkToHome:active{
+            color: white;
+        }
+        .tweet-container {
+            max-width: 60vw;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* align-items: center; */
+        }
+        #username{
+            text-align: center;
+        }
+        h2{
+            border-radius: 6px;
+            padding: 3px ;
+            color: white;
+            background-color: blue;
+            text-align: center;
+            width: 60vw;
+        }
+        .tweet-form, .tweet-list {
+            margin-bottom: 20px;
+        }
+        .tweet-list{
+            width: 60vw;
+        }
+        .tweet-form{
+            width: 60vw;
+            /* display: flex;
+            justify-content: center;
+            align-items: center; */
+        }
+        .tweet-form form{
+            width: 100%;
+            color: white;
+            background-color: #536493;
+            border-radius: 6px;
+            border: 1px solid black;
+            padding: 5px 11px;
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items:safe;
+        }
+        .tweet-form button{
+            align-self: center;
+            width:100%;
+            padding: 2px 6px;
+            font-size: 1.05rem;
+        }
+        .tweet-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .tweet-list li {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .tweet-list img {
+            max-width: 100%;
+            height: auto;
+        }
+        .tweet-actions {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+        }
+        .tweet-actions button{
+            color: red;
+            border-radius: 3px;
+            border: 1px solid black;
+            font-size: 1.05rem;
+        }
+        .tweet-actions a{
+            color: #4535C1;
+            border-radius: 3px;
+            font-size: 1.05rem;
+            background-color: rgb(239, 239, 239);
+            padding: 1px 6px;
+            border: 1px solid black;
+            text-decoration: none;
+        }
+        #content{
+            /* text-align: center; */
+            margin-top: 0px;
+        }
+        #imgContent{
+            padding: 0px;
+            color: white;
+            background-color: #5C88C4;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <li class="linkToHome"><a href="{% url 'django_app:home' %}" class="linkToHome">Back to Home</a></li>
+    </nav>
+    <div class="tweet-container">
+        <h2>Tweets</h2>
+
+        <p id="username">Welcome, {{ user.username }}!</p>
+
+        <!-- Form to post a new tweet -->
+        <div class="tweet-form">
+            <form method="post" action="{% url 'django_app:post_tweet' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="content">New Tweet:</label>
+                <textarea id="content" name="content" placeholder="Type your tweet..." required></textarea>
+                <br>
+                <label for="media">Upload Media (no videos allowed)</label>
+                <input type="file" id="media" name="media">
+                <br>
+                <button type="submit">Post Tweet</button>
+            </form>
+        </div>
+
+        <!-- List of tweets -->
+        <div class="tweet-list">
+            <ul>
+                {% for tweet in tweets %}
+                    <li>
+                        <p><strong>{{ tweet.user.username }}</strong></p>
+                        <!-- <p>{{ tweet.content }}</p> -->
+                        <div id="imgContent">
+                            {% if tweet.media %}
+                            <img src="{{ tweet.media.url }}" alt="Tweet media">
+                        {% endif %}
+                        <p id="content">{{ tweet.content }}</p>
+                        </div>
+
+                        <p>Posted on: {{ tweet.created_at }}</p>
+                        
+                        {% if tweet.user == user %}
+                            <div class="tweet-actions">
+                                <!-- Form to delete tweet -->
+                                <form method="post" action="{% url 'django_app:delete_tweet' tweet.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                </form>
+
+                                <!-- Link to edit tweet -->
+                                <a href="{% url 'django_app:edit_tweet' tweet.id %}">Edit</a>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li>No tweets available.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

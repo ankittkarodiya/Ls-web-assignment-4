@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #FFF1DB;
+        }
+        nav{
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            position: relative;
+            top: 0px;
+            width: 100vw;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 21px;
+        }
+        #login{
+            border-radius: 4px;
+            padding: 2px 8px;
+            color: white;
+            background-color: green;
+        }
+        #login:hover{
+            color: white;
+        }
+        #logout{
+            border-radius: 4px;
+            padding: 2px 8px;
+            color: white;
+            background-color: red;
+        }
+        #logout:hover{
+            color: white;
+        }
+        ul li{
+            padding: 5px 11px;
+            color: white;
+            list-style: none;
+            display: inline;
+        }
+        ul li a{
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: white;
+            margin: 0 11px;
+            padding: 0px 11px;
+        }
+        ul li a:hover{
+            color: red;
+        }
+        ul li a:active{
+            color: white;
+        }
+        ul{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            /* justify-content: center; */
+        }
+        h2{
+            text-align: center;
+        }
+        button{
+            display: inline;
+            text-align: center;
+            width: 28%;
+            font-size: 1.05rem;
+            /* margin: 6px auto; */
+        }
+        form{
+            width: 50vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* margin: 6px auto; */
+        }
+        main{
+            margin-top: 21px;
+            width: 50vw;
+            margin: 6px auto;
+            /* border: 2px solid red; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 21px;
+        }
+        p a{
+            color: red;
+            font-size: 1.1rem;
+        }
+        p a:active{
+            color: blue;
+        }
+        #tweetForm{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 40vw;
+            /* height: 20vw; */
+            border: 1px solid black;
+            border-radius: 6px;
+            padding: 5px 11px;
+            background-color: #536493;
+            color: white;
+
+        }
+        textarea{
+            width: 100%;
+        }
+        button{
+            align-self: center;
+            width:100%;
+            padding: 2px 6px;
+            font-size: 1.05rem;
+        }
+        #view-tweets{
+            padding: 2px 9px;
+            text-decoration: none;
+            background-color: blue;
+            color: white;
+            border-radius: 3px;
+        }
+        p{
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            
+
+            <li><a href="{% url 'django_app:home' %}">Home</a></li>
+            <li><a href="{% url 'django_app:profile' %}">Profile</a></li>
+            <!-- <li><a href="{% url 'django_app:login' %}" id="login">Login</a></li> -->
+            <li><a href="{% url 'django_app:logout' %}" id="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Welcome to the Home Page</h2>
+        <!-- new -->
+        <p>Welcome, {{ user.username }}!</p>
+        <!-- <form id="tweetForm" method="post" action="{% url 'django_app:create_tweet' %}"> -->
+            <form id="tweetForm" method="post" action="{% url 'django_app:post_tweet' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="content">New Tweet :-</label>
+            <textarea name="content" placeholder="Type your tweet..." required></textarea>
+            <br>
+        <label for="media">Upload Media (no videos allowed)</label>
+        <input type="file" id="media" name="media">
+        <br>
+            <button type="submit">Tweet</button>
+        </form>
+        <a id="view-tweets" href="{% url 'django_app:tweet_list' %}">View Tweets</a>
+
+
+        <!-- <form method="post" action="{% url 'django_app:register' %}"> -->
+            <!-- {% csrf_token %} -->
+            <!-- {{ form.as_p }} -->
+            <!-- <button type="submit">Go to register</button> -->
+            <!-- <p><a href="{% url 'django_app:register' %}">Register now</a>(igonore if u have already registered)</p> Added link to register page -->
+
+        <!-- </form> -->
+    </main>
+</body>
+</html>

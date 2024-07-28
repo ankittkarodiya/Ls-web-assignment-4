@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Tweet</title>
+</head>
+<body>
+    <h1>Create a New Tweet</h1>
+    <!-- <form method="post">
+        {% csrf_token %}
+        <textarea name="content" rows="4" cols="50"></textarea><br>
+        <button type="submit">Submit</button>
+    </form> -->
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'tweets' %}">Back to Tweets</a>  <!-- This should match the URL name defined in urls.py -->
+
+    
+
+</body>
+</html>
