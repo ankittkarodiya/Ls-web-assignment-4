@@ -9,7 +9,7 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
 
 
-# new
+
 class Tweet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()

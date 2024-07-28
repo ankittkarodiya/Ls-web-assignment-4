@@ -7,7 +7,7 @@ from . import views
 from .views import register_view, login_view, logout_view, home_view, profile, create_tweet, tweet_list, post_tweet_view, delete_tweet_view, edit_tweet_view
 
 
-app_name = 'django_app'  # namespace
+app_name = 'django_app'  
 
 urlpatterns = [
     path('register/', views.register_view, name='register'),
@@ -16,7 +16,7 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('profile/', views.profile, name='profile'),
 
-    # new
+   
     path('create/', create_tweet, name='create_tweet'),
     path('tweet_list/', tweet_list, name='tweet_list'),
     path('tweet_list/post/', post_tweet_view, name='post_tweet'),

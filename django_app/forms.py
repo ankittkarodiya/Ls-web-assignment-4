@@ -15,7 +15,7 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ["username", "email", "password1", "password2"]
 
-# new
+
 class TweetForm(forms.ModelForm):
     class Meta:
         model = Tweet

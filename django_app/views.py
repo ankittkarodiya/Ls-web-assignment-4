@@ -95,19 +95,6 @@ def delete_tweet_view(request, tweet_id):
     return redirect('django_app:tweet_list')
 
 @login_required
-# def edit_tweet_view(request, tweet_id):
-#     tweet = get_object_or_404(Tweet, id=tweet_id)
-#     if request.user != tweet.user:
-#         return redirect('django_app:tweet_list')
-#     if request.method == 'POST':
-#         form = TweetForm(request.POST, request.FILES, instance=tweet)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('django_app:tweet_list')
-#     else:
-#         form = TweetForm(instance=tweet)
-#     return render(request, 'django_app/create.html', {'form': form})
-
 def edit_tweet_view(request, tweet_id):
     tweet = get_object_or_404(Tweet, id=tweet_id)
     if request.method == 'POST':
